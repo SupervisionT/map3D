@@ -56,7 +56,7 @@ elevTiles.drawTile = function (canvas, tile, zoom) {
     var context = canvas.getContext('2d'),
         imageObj = new Image(),
         tileUID = ''+zoom+'/'+tile.x+'/'+tile.y;
-
+    console.log('context', context, 'imageObj', imageObj, 'tileUID', tileUID)
     var drawContext = canvas.getContext('2d');
 
     // To access / delete elevTiles later
@@ -85,7 +85,6 @@ elevTiles.drawTile = function (canvas, tile, zoom) {
     // Source of image tile
     imageObj.crossOrigin = 'Anonymous';
     imageObj.src = 'https://a.tiles.mapbox.com/v4/mapbox.terrain-rgb/'+zoom+'/'+tile.x+'/'+tile.y+'.pngraw?access_token=' + L.mapbox.accessToken;
-    console.log('imageObj', imageObj)
 
 };
 
