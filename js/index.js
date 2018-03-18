@@ -2,7 +2,7 @@ var tileSize,
     everyOther = true,
     drawElev = false;
 
-L.mapbox.accessToken = 'pk.eyJ1IjoiZG5vbWFkYiIsImEiOiJjaW16aXFsZzUwNHJmdjdra3h0Nmd2cjY1In0.SqzkaKalXxQaPhQLjodQcQ';
+L.mapbox.accessToken = 'pk.eyJ1IjoicGFuZ2VhbWFwcyIsImEiOiJjaWdra3A1bjgwMHRwdW5senp6ajZzN2Z5In0.pZv62GV1KFSFmcnJqMCnFQ';
 
 var map = L.map('map_canvas', {
     worldCopyJump: true,
@@ -85,6 +85,7 @@ elevTiles.drawTile = function (canvas, tile, zoom) {
     // Source of image tile
     imageObj.crossOrigin = 'Anonymous';
     imageObj.src = 'https://a.tiles.mapbox.com/v4/mapbox.terrain-rgb/'+zoom+'/'+tile.x+'/'+tile.y+'.pngraw?access_token=' + L.mapbox.accessToken;
+    console.log('imageObj', imageObj)
 
 };
 
