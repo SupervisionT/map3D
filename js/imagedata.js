@@ -13,6 +13,7 @@ var colorHash = {
 var color_filter;
 
 //Listen for events
+console.log(self)
 self.addEventListener('message', function(e) {
     // obect to hold various methods based on message to worker
     var edgeFind = {
