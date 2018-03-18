@@ -13,8 +13,8 @@ var colorHash = {
 var color_filter;
 
 //Listen for events
-console.log(self)
 self.addEventListener('message', function(e) {
+    console.log('arguments', arguments)    
     // obect to hold various methods based on message to worker
     var edgeFind = {
         // If tile data was sent, add to data object
