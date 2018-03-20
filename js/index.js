@@ -29,53 +29,24 @@ elevTiles.on('tileunload', function(e){
 });
 
 window.onload = function() {
-    let imageDataArray = tilesData.map(x => {
-        imageObj = new Image();
-        imageObj.crossOrigin = 'Anonymous';
-        imageObj.src = 'https://a.tiles.mapbox.com/v4/mapbox.terrain-rgb/'+x+'.pngraw?access_token=' + L.mapbox.accessToken;
-        return imageObj;
+    let keys = Object.keys(elevTiles._tiles)
+
+    let imageDataArray = keys.map((key,i) => {
+        var context = elevTiles._tiles[key].getContext('2d');
+        var imageData = context.getImageData(0, 0, 256, 256);
+        var dataArray = new Float32Array(65536);
+        for (var i=0;i<imageData.data.length/4;i++) {
+            var tDataVal = -10000 + ((imageData.data[i * 4] * 256 * 256 + imageData.data[i * 4 + 1] * 256 + imageData.data[i * 4 + 2]) * 0.1);
+            dataArray[i] = tDataVal;
+        }
+        return dataArray
+        // imageObj = new Image();
+        // imageObj.crossOrigin = 'Anonymous';
+        // imageObj.src = 'https://a.tiles.mapbox.com/v4/mapbox.terrain-rgb/'+x+'.pngraw?access_token=' + L.mapbox.accessToken;
+        // return imageObj;
         })
         console.log('imageDataArray', imageDataArray);    
-
-        elevTiles.drawTile = function (canvas, tile, zoom) {
-            tileSize = this.options.tileSize;
-        
-            var context = canvas.getContext('2d'),
-                imageObj = new Image(),
-                tileUID = ''+zoom+'/'+tile.x+'/'+tile.y;
-        
-            var drawContext = canvas.getContext('2d');
-            // console.log('context',context)
-            // To access / delete elevTiles later
-            tile.id = tileUID;
-        
-            tileContextsElev[tileUID] = drawContext;
-        
-            imageObj.onload = function() {
-                // Draw Image Tile
-                context.drawImage(imageObj, 0, 0);
-        
-                // Get Image Data
-                var imageData = context.getImageData(0, 0, tileSize, tileSize);
-        
-                elevWorker.postMessage({
-                    data:{
-                        tileUID:tileUID,
-                        tileSize:tileSize,
-                        array:imageData.data,
-                        drawElev: drawElev
-                    },
-                        type:'tiledata'},
-                    [imageData.data.buffer]);
-            };
-        
-            // Source of image tile
-            imageObj.crossOrigin = 'Anonymous';
-            imageObj.src = 'https://a.tiles.mapbox.com/v4/mapbox.terrain-rgb/'+zoom+'/'+tile.x+'/'+tile.y+'.pngraw?access_token=' + L.mapbox.accessToken;
-        
-        };
-                
-    };
+};
 
 
 var elevWorker = new Worker('js/imagedata.js');
@@ -101,6 +72,43 @@ elevWorker.postMessage({
     type:'setfilter'}
 );
 
+elevTiles.drawTile = function (canvas, tile, zoom) {
+    tileSize = this.options.tileSize;
+
+    var context = canvas.getContext('2d'),
+        imageObj = new Image(),
+        tileUID = ''+zoom+'/'+tile.x+'/'+tile.y;
+
+    var drawContext = canvas.getContext('2d');
+    console.log('context',context)
+    // To access / delete elevTiles later
+    tile.id = tileUID;
+
+    tileContextsElev[tileUID] = drawContext;
+
+    imageObj.onload = function() {
+        // Draw Image Tile
+        context.drawImage(imageObj, 0, 0);
+
+        // Get Image Data
+        var imageData = context.getImageData(0, 0, tileSize, tileSize);
+
+        elevWorker.postMessage({
+            data:{
+                tileUID:tileUID,
+                tileSize:tileSize,
+                array:imageData.data,
+                drawElev: drawElev
+            },
+                type:'tiledata'},
+            [imageData.data.buffer]);
+    };
+
+    // Source of image tile
+    imageObj.crossOrigin = 'Anonymous';
+    imageObj.src = 'https://a.tiles.mapbox.com/v4/mapbox.terrain-rgb/'+zoom+'/'+tile.x+'/'+tile.y+'.pngraw?access_token=' + L.mapbox.accessToken;
+
+};
 
 elevWorker.addEventListener('message', function(response) {
     if (response.data.type === 'tiledata') {
