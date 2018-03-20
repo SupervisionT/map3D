@@ -29,11 +29,12 @@ elevTiles.on('tileunload', function(e){
 });
 
 window.onload = function() {
-    let keys = Object.keys(elevTiles._tiles)
+    var tileSize = elevTiles.options.tileSize;
+    var keys = Object.keys(elevTiles._tiles)
 
-    let imageDataArray = keys.map(key => {
+    var imageDataArray = keys.map(key => {
         var context = elevTiles._tiles[key].getContext('2d');
-        var imageData = context.getImageData(0, 0, 256, 256);
+        var imageData = context.getImageData(0, 0, tileSize, tileSize);
         console.log('imageData', imageData.data, key);
         var dataArray = new Float32Array(65536);
         for (var i=0;i<imageData.data.length/4;i++) {
@@ -56,7 +57,7 @@ window.onload = function() {
 
        delete imageData.data;
 
-        return {key: dataArray}
+        return dataArray
         })
         // imageObj = new Image();
         // imageObj.crossOrigin = 'Anonymous';
