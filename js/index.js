@@ -37,10 +37,25 @@ window.onload = function() {
         console.log('imageData', imageData.data, key);
         var dataArray = new Float32Array(65536);
         for (var i=0;i<imageData.data.length/4;i++) {
-            var tDataVal = -10000 + ((imageData.data[i * 4] * 256 * 256 + imageData.data[i * 4 + 1] * 256 + imageData.data[i * 4 + 2]) * 0.1);           
+            var tDataVal = -10000 + ((imageData.data[i * 4] * 256 * 256 + imageData.data[i * 4 + 1] * 256 + imageData.data[i * 4 + 2]) * 0.1);
+            // console.log('tDataVal ', tDataVal)
+            var alpha;
+
+            if (tDataVal > color_filter) {
+                alpha = 0;
+            } else {
+                alpha = 100;
+            }
+            imageData.data[i * 4] = 10;
+            imageData.data[i*4+1] = 20;
+            imageData.data[i*4+2] = 200;
+            imageData.data[i*4+3] = alpha;
+
             dataArray[i] = tDataVal;
         }
-        // return dataArray.map((x, j) => {( -10000 + ((imageData.data[j * 4] * 256 * 256 + imageData.data[j * 4 + 1] * 256 + imageData.data[j * 4 + 2]) * 0.1))
+
+       delete imageData.data;
+
         return dataArray
         })
         // imageObj = new Image();
