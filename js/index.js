@@ -54,7 +54,7 @@ window.onload = function() {
 
             dataArray[i] = tDataVal;
         }
-        tilesData.Object(key) = dataArray
+        tilesData[key] = dataArray
        delete imageData.data;
         return tilesData
         })
