@@ -1,7 +1,8 @@
 var tileSize,
     everyOther = true,
-    drawElev = false;
-
+    drawElev = false,
+    tilesData = [];
+    
 L.mapbox.accessToken = 'pk.eyJ1IjoicGFuZ2VhbWFwcyIsImEiOiJjaWdra3A1bjgwMHRwdW5senp6ajZzN2Z5In0.pZv62GV1KFSFmcnJqMCnFQ';
 
 var map = L.map('map_canvas', {
@@ -23,10 +24,12 @@ var elevTiles = new L.TileLayer.Canvas({
 console.log('elevTiles', elevTiles)
 
 elevTiles.on('tileunload', function(e){
-    console.log('e.tile._tilePoint.id', e.tile._tilePoint.id)    
-    //Send tile unload data to elevWorker to delete un-needed pixel data
+    tilesData = [...tilesData, e.tile._tilePoint.id];  
     elevWorker.postMessage({'data':e.tile._tilePoint.id,'type':'tileunload'});
 });
+
+console.log('tilesData', tilesData);
+
 
 var elevWorker = new Worker('js/imagedata.js');
 
