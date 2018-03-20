@@ -34,7 +34,7 @@ window.onload = function() {
     let imageDataArray = keys.map((key,i) => {
         var context = elevTiles._tiles[key].getContext('2d');
         var imageData = context.getImageData(0, 0, 256, 256);
-        console.log('imageData', imageData.data);
+        console.log('imageData', imageData.data, key);
         var dataArray = new Float32Array(65536);
         // for (var i=0;i<imageData.data.length/4;i++) {
         //     var tDataVal = -10000 + ((imageData.data[i * 4] * 256 * 256 + imageData.data[i * 4 + 1] * 256 + imageData.data[i * 4 + 2]) * 0.1);           
