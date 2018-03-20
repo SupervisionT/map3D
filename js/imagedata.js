@@ -1,4 +1,4 @@
-importScripts('general-geo-utils.js');
+// importScripts('general-geo-utils.js');
 
 // Tile Data Holder
 var tileData = {};
