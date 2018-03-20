@@ -1,7 +1,7 @@
 var tileSize,
     everyOther = true,
     drawElev = false,
-    tilesData = [];
+    tilesData = {};
     
 L.mapbox.accessToken = 'pk.eyJ1IjoicGFuZ2VhbWFwcyIsImEiOiJjaWdra3A1bjgwMHRwdW5senp6ajZzN2Z5In0.pZv62GV1KFSFmcnJqMCnFQ';
 
@@ -24,7 +24,7 @@ var elevTiles = new L.TileLayer.Canvas({
 console.log('elevTiles', elevTiles)
 
 elevTiles.on('tileunload', function(e){
-    tilesData = [...tilesData, e.tile._tilePoint.id];  
+    // tilesData = [...tilesData, e.tile._tilePoint.id];  
     elevWorker.postMessage({'data':e.tile._tilePoint.id,'type':'tileunload'});
 });
 
@@ -54,9 +54,9 @@ window.onload = function() {
 
             dataArray[i] = tDataVal;
         }
-
+        tilesData.Object(key) = dataArray
        delete imageData.data;
-        return {key, dataArray}
+        return tilesData
         })
         // imageObj = new Image();
         // imageObj.crossOrigin = 'Anonymous';
