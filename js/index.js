@@ -21,7 +21,7 @@ var elevTiles = new L.TileLayer.Canvas({
     unloadInvisibleTiles:true,
     attribution: '<a href="http://www.mapbox.com/about/maps/" target="_blank">Terms &amp; Feedback</a>'
 });
-// console.log('elevTiles', elevTiles)
+console.log('elevTiles', elevTiles)
 
 elevTiles.on('tileunload', function(e){
     tilesData = [...tilesData, e.tile._tilePoint.id];  
@@ -36,7 +36,46 @@ window.onload = function() {
         return imageObj;
         })
         console.log('imageDataArray', imageDataArray);    
-};
+
+        elevTiles.drawTile = function (canvas, tile, zoom) {
+            tileSize = this.options.tileSize;
+        
+            var context = canvas.getContext('2d'),
+                imageObj = new Image(),
+                tileUID = ''+zoom+'/'+tile.x+'/'+tile.y;
+        
+            var drawContext = canvas.getContext('2d');
+            // console.log('context',context)
+            // To access / delete elevTiles later
+            tile.id = tileUID;
+        
+            tileContextsElev[tileUID] = drawContext;
+        
+            imageObj.onload = function() {
+                // Draw Image Tile
+                context.drawImage(imageObj, 0, 0);
+        
+                // Get Image Data
+                var imageData = context.getImageData(0, 0, tileSize, tileSize);
+        
+                elevWorker.postMessage({
+                    data:{
+                        tileUID:tileUID,
+                        tileSize:tileSize,
+                        array:imageData.data,
+                        drawElev: drawElev
+                    },
+                        type:'tiledata'},
+                    [imageData.data.buffer]);
+            };
+        
+            // Source of image tile
+            imageObj.crossOrigin = 'Anonymous';
+            imageObj.src = 'https://a.tiles.mapbox.com/v4/mapbox.terrain-rgb/'+zoom+'/'+tile.x+'/'+tile.y+'.pngraw?access_token=' + L.mapbox.accessToken;
+        
+        };
+                
+    };
 
 
 var elevWorker = new Worker('js/imagedata.js');
@@ -62,43 +101,6 @@ elevWorker.postMessage({
     type:'setfilter'}
 );
 
-elevTiles.drawTile = function (canvas, tile, zoom) {
-    tileSize = this.options.tileSize;
-
-    var context = canvas.getContext('2d'),
-        imageObj = new Image(),
-        tileUID = ''+zoom+'/'+tile.x+'/'+tile.y;
-
-    var drawContext = canvas.getContext('2d');
-    console.log('context',context)
-    // To access / delete elevTiles later
-    tile.id = tileUID;
-
-    tileContextsElev[tileUID] = drawContext;
-
-    imageObj.onload = function() {
-        // Draw Image Tile
-        context.drawImage(imageObj, 0, 0);
-
-        // Get Image Data
-        var imageData = context.getImageData(0, 0, tileSize, tileSize);
-
-        elevWorker.postMessage({
-            data:{
-                tileUID:tileUID,
-                tileSize:tileSize,
-                array:imageData.data,
-                drawElev: drawElev
-            },
-                type:'tiledata'},
-            [imageData.data.buffer]);
-    };
-
-    // Source of image tile
-    imageObj.crossOrigin = 'Anonymous';
-    imageObj.src = 'https://a.tiles.mapbox.com/v4/mapbox.terrain-rgb/'+zoom+'/'+tile.x+'/'+tile.y+'.pngraw?access_token=' + L.mapbox.accessToken;
-
-};
 
 elevWorker.addEventListener('message', function(response) {
     if (response.data.type === 'tiledata') {
