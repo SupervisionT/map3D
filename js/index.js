@@ -41,7 +41,7 @@ window.onload = function() {
             // console.log('tDataVal ', tDataVal)
             var alpha;
 
-            if (tDataVal > color_filter) {
+            if (tDataVal > 10) {
                 alpha = 0;
             } else {
                 alpha = 100;
