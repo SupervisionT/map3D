@@ -28,7 +28,9 @@ elevTiles.on('tileunload', function(e){
     elevWorker.postMessage({'data':e.tile._tilePoint.id,'type':'tileunload'});
 });
 
-console.log('tilesData', tilesData);
+window.onload = function() {
+    console.log('tilesData', tilesData);
+  };
 
 
 var elevWorker = new Worker('js/imagedata.js');
