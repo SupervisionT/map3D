@@ -29,8 +29,14 @@ elevTiles.on('tileunload', function(e){
 });
 
 window.onload = function() {
-    console.log('tilesData', tilesData);
-  };
+    let imageDataArray = tilesData.map(x => {
+        imageObj = new Image();
+        imageObj.crossOrigin = 'Anonymous';
+        imageObj.src = 'https://a.tiles.mapbox.com/v4/mapbox.terrain-rgb/'+x+'.pngraw?access_token=' + L.mapbox.accessToken;
+        return imageObj;
+        })
+        console.log('imageDataArray', imageDataArray);    
+};
 
 
 var elevWorker = new Worker('js/imagedata.js');
