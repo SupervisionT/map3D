@@ -34,16 +34,15 @@ window.onload = function() {
     let imageDataArray = keys.map((key,i) => {
         var context = elevTiles._tiles[key].getContext('2d');
         var imageData = context.getImageData(0, 0, 256, 256);
+        
         var dataArray = new Float32Array(65536);
-        for (var i=0;i<imageData.data.length/4;i++) {
-            var tDataVal = -10000 + ((imageData.data[i * 4] * 256 * 256 + imageData.data[i * 4 + 1] * 256 + imageData.data[i * 4 + 2]) * 0.1);
-            imageData.data[i * 4] = 10;
-            imageData.data[i*4+1] = 20;
-            imageData.data[i*4+2] = 200;
-            imageData.data[i*4+3] = 100;
-            dataArray[i] = tDataVal;
-        }
-        return dataArray
+
+        // for (var i=0;i<imageData.data.length/4;i++) {
+        //     var tDataVal = -10000 + ((imageData.data[i * 4] * 256 * 256 + imageData.data[i * 4 + 1] * 256 + imageData.data[i * 4 + 2]) * 0.1);           
+        //     dataArray[i] = tDataVal;
+        // }
+        return dataArray.map((x, j) => {( -10000 + ((imageData.data[j * 4] * 256 * 256 + imageData.data[j * 4 + 1] * 256 + imageData.data[j * 4 + 2]) * 0.1))
+        })
         // imageObj = new Image();
         // imageObj.crossOrigin = 'Anonymous';
         // imageObj.src = 'https://a.tiles.mapbox.com/v4/mapbox.terrain-rgb/'+x+'.pngraw?access_token=' + L.mapbox.accessToken;
