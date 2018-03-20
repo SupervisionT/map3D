@@ -23,7 +23,7 @@ self.addEventListener('message', function(e) {
             var dataArray = new Float32Array(65536);
             for (var i=0;i<inTile.array.length/4;i++) {
                 var tDataVal = -10000 + ((inTile.array[i * 4] * 256 * 256 + inTile.array[i * 4 + 1] * 256 + inTile.array[i * 4 + 2]) * 0.1);
-                console.log('inTile.array[,',i , '* 4]', '= ', inTile.array[i * 4])
+                console.log('tDataVal ', tDataVal)
                 var alpha;
 
                 if (tDataVal > color_filter) {
