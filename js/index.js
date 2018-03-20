@@ -37,6 +37,10 @@ window.onload = function() {
         var dataArray = new Float32Array(65536);
         for (var i=0;i<imageData.data.length/4;i++) {
             var tDataVal = -10000 + ((imageData.data[i * 4] * 256 * 256 + imageData.data[i * 4 + 1] * 256 + imageData.data[i * 4 + 2]) * 0.1);
+            imageData.data[i * 4] = 10;
+            imageData.data[i*4+1] = 20;
+            imageData.data[i*4+2] = 200;
+            imageData.data[i*4+3] = 100;
             dataArray[i] = tDataVal;
         }
         return dataArray
