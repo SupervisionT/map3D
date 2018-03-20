@@ -7,7 +7,7 @@ L.mapbox.accessToken = 'pk.eyJ1IjoicGFuZ2VhbWFwcyIsImEiOiJjaWdra3A1bjgwMHRwdW5se
 var map = L.map('map_canvas', {
     worldCopyJump: true,
     doubleClickZoom: false,
-    center: [38, -120],
+    center: [37.7576793, -122.5076407],
     zoom: 13,
     scrollWheelZoom: false
     });
@@ -20,7 +20,7 @@ var elevTiles = new L.TileLayer.Canvas({
     unloadInvisibleTiles:true,
     attribution: '<a href="http://www.mapbox.com/about/maps/" target="_blank">Terms &amp; Feedback</a>'
 });
-
+console.log('elevTiles', elevTiles)
 
 elevTiles.on('tileunload', function(e){
     //Send tile unload data to elevWorker to delete un-needed pixel data
@@ -65,7 +65,6 @@ elevTiles.drawTile = function (canvas, tile, zoom) {
     tileContextsElev[tileUID] = drawContext;
 
     imageObj.onload = function() {
-        console.log('imageObj.onloaddddddddddddddddddddddddddd', imageObj)
         // Draw Image Tile
         context.drawImage(imageObj, 0, 0);
 
