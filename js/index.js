@@ -23,6 +23,7 @@ var elevTiles = new L.TileLayer.Canvas({
 console.log('elevTiles', elevTiles)
 
 elevTiles.on('tileunload', function(e){
+    console.log('e.tile._tilePoint.id', e.tile._tilePoint.id)    
     //Send tile unload data to elevWorker to delete un-needed pixel data
     elevWorker.postMessage({'data':e.tile._tilePoint.id,'type':'tileunload'});
 });
