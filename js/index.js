@@ -57,7 +57,7 @@ window.onload = function() {
 
        delete imageData.data;
 
-        return dataArray
+        return [key, dataArray]
         })
         // imageObj = new Image();
         // imageObj.crossOrigin = 'Anonymous';

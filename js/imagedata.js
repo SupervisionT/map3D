@@ -39,6 +39,7 @@ self.addEventListener('message', function(e) {
 
                 dataArray[i] = tDataVal;
             }
+                console.log('dataArray ', inTile.tileUID, dataArray)
 
             self.postMessage({
                 'data':{
