@@ -21,7 +21,7 @@ var elevTiles = new L.TileLayer.Canvas({
     unloadInvisibleTiles:true,
     attribution: '<a href="http://www.mapbox.com/about/maps/" target="_blank">Terms &amp; Feedback</a>'
 });
-console.log('elevTiles', elevTiles)
+// console.log('elevTiles', elevTiles)
 
 elevTiles.on('tileunload', function(e){
     tilesData = [...tilesData, e.tile._tilePoint.id];  
@@ -70,7 +70,7 @@ elevTiles.drawTile = function (canvas, tile, zoom) {
         tileUID = ''+zoom+'/'+tile.x+'/'+tile.y;
 
     var drawContext = canvas.getContext('2d');
-
+    console.log('context',context)
     // To access / delete elevTiles later
     tile.id = tileUID;
 
