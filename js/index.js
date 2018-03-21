@@ -110,7 +110,7 @@ elevTiles.drawTile = function (canvas, tile, zoom) {
 
         // Get Image Data
         var imageData = context.getImageData(0, 0, tileSize, tileSize);
-
+        console.log(tileUID, imageData)
     //     elevWorker.postMessage({
     //         data:{
     //             tileUID:tileUID,
