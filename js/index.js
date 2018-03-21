@@ -67,85 +67,85 @@ window.onload = function() {
 };
 
 
-var elevWorker = new Worker('js/imagedata.js');
+// var elevWorker = new Worker('js/imagedata.js');
 
-var tileContextsElev = {};
+// var tileContextsElev = {};
 
-var locs = location.search.split('?');
+// var locs = location.search.split('?');
 
-if (locs.length > 1) {
-    locs = locs[1].split('=');
-} else {
-    locs = ['no']
-}
+// if (locs.length > 1) {
+//     locs = locs[1].split('=');
+// } else {
+//     locs = ['no']
+// }
 
-if (locs[0] == 'elev') {
-    elev_filter = parseInt(locs[1]);
-} else {
-    elev_filter = 10;
-}
+// if (locs[0] == 'elev') {
+//     elev_filter = parseInt(locs[1]);
+// } else {
+//     elev_filter = 10;
+// }
 
-elevWorker.postMessage({
-    data: elev_filter,
-    type:'setfilter'}
-);
+// elevWorker.postMessage({
+//     data: elev_filter,
+//     type:'setfilter'}
+// );
 
-elevTiles.drawTile = function (canvas, tile, zoom) {
-    tileSize = this.options.tileSize;
+// elevTiles.drawTile = function (canvas, tile, zoom) {
+//     tileSize = this.options.tileSize;
 
-    var context = canvas.getContext('2d'),
-        imageObj = new Image(),
-        tileUID = ''+zoom+'/'+tile.x+'/'+tile.y;
-        console.log('tileUID vs tile.id', tileUID, tile.id)
-    var drawContext = canvas.getContext('2d');
-    // console.log('context',context)
-    // To access / delete elevTiles later
-    tile.id = tileUID;
+//     var context = canvas.getContext('2d'),
+//         imageObj = new Image(),
+//         tileUID = ''+zoom+'/'+tile.x+'/'+tile.y;
+//         console.log('tileUID vs tile.id', tileUID, tile.id)
+//     var drawContext = canvas.getContext('2d');
+//     // console.log('context',context)
+//     // To access / delete elevTiles later
+//     tile.id = tileUID;
 
-    tileContextsElev[tileUID] = drawContext;
+//     tileContextsElev[tileUID] = drawContext;
 
-    imageObj.onload = function() {
-        // Draw Image Tile
-        context.drawImage(imageObj, 0, 0);
+//     imageObj.onload = function() {
+//         // Draw Image Tile
+//         context.drawImage(imageObj, 0, 0);
 
-        // Get Image Data
-        var imageData = context.getImageData(0, 0, tileSize, tileSize);
+//         // Get Image Data
+//         var imageData = context.getImageData(0, 0, tileSize, tileSize);
 
-        elevWorker.postMessage({
-            data:{
-                tileUID:tileUID,
-                tileSize:tileSize,
-                array:imageData.data,
-                drawElev: drawElev
-            },
-                type:'tiledata'},
-            [imageData.data.buffer]);
-    };
+//         elevWorker.postMessage({
+//             data:{
+//                 tileUID:tileUID,
+//                 tileSize:tileSize,
+//                 array:imageData.data,
+//                 drawElev: drawElev
+//             },
+//                 type:'tiledata'},
+//             [imageData.data.buffer]);
+//     };
 
-    // Source of image tile
-    imageObj.crossOrigin = 'Anonymous';
-    imageObj.src = 'https://a.tiles.mapbox.com/v4/mapbox.terrain-rgb/'+zoom+'/'+tile.x+'/'+tile.y+'.pngraw?access_token=' + L.mapbox.accessToken;
+//     // Source of image tile
+//     imageObj.crossOrigin = 'Anonymous';
+//     imageObj.src = 'https://a.tiles.mapbox.com/v4/mapbox.terrain-rgb/'+zoom+'/'+tile.x+'/'+tile.y+'.pngraw?access_token=' + L.mapbox.accessToken;
 
-};
+// };
 
-elevWorker.addEventListener('message', function(response) {
-    if (response.data.type === 'tiledata') {
-        var dispData = tileContextsElev[response.data.data.tileUID].createImageData(tileSize,tileSize);
-        dispData.data.set(response.data.data.array);
-        tileContextsElev[response.data.data.tileUID].putImageData(dispData,0,0);
-    }
-}, false);
+// elevWorker.addEventListener('message', function(response) {
+//     if (response.data.type === 'tiledata') {
+//         var dispData = tileContextsElev[response.data.data.tileUID].createImageData(tileSize,tileSize);
+//         dispData.data.set(response.data.data.array);
+//         tileContextsElev[response.data.data.tileUID].putImageData(dispData,0,0);
+//     }
+// }, false);
 
-elevTiles.addTo(map);
-
-
-map.touchZoom.disable();
-map.doubleClickZoom.disable();
+// elevTiles.addTo(map);
 
 
-function formatElev(elev) {
-    return Math.round(elev)+' m';
-}
-function formatTemp(temp) {
-    return Math.round(temp)+'° f';
-}
+// map.touchZoom.disable();
+// map.doubleClickZoom.disable();
+
+
+// function formatElev(elev) {
+//     return Math.round(elev)+' m';
+// }
+// function formatTemp(temp) {
+//     return Math.round(temp)+'° f';
+// }
