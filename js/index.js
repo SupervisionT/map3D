@@ -28,43 +28,43 @@ elevTiles.on('tileunload', function(e){
     elevWorker.postMessage({'data':e.tile._tilePoint.id,'type':'tileunload'});
 });
 
-window.onload = function() {
-    var tileSize = elevTiles.options.tileSize;
-    var keys = Object.keys(elevTiles._tiles)
+// window.onload = function() {
+//     var tileSize = elevTiles.options.tileSize;
+//     var keys = Object.keys(elevTiles._tiles)
 
-    var imageDataArray = keys.map(key => {
-        var context = elevTiles._tiles[key].getContext('2d');
-        var imageData = context.getImageData(0, 0, tileSize, tileSize);
-        console.log('imageData', imageData.data, key);
-        var dataArray = new Float32Array(65536);
-        for (var i=0;i<imageData.data.length/4;i++) {
-            var tDataVal = -10000 + ((imageData.data[i * 4] * 256 * 256 + imageData.data[i * 4 + 1] * 256 + imageData.data[i * 4 + 2]) * 0.1);
-            // console.log('tDataVal ', tDataVal)
-            // var alpha;
+//     var imageDataArray = keys.map(key => {
+//         var context = elevTiles._tiles[key].getContext('2d');
+//         var imageData = context.getImageData(0, 0, tileSize, tileSize);
+//         console.log('imageData', imageData.data, key);
+//         var dataArray = new Float32Array(65536);
+//         for (var i=0;i<imageData.data.length/4;i++) {
+//             var tDataVal = -10000 + ((imageData.data[i * 4] * 256 * 256 + imageData.data[i * 4 + 1] * 256 + imageData.data[i * 4 + 2]) * 0.1);
+//             // console.log('tDataVal ', tDataVal)
+//             // var alpha;
 
-            // if (tDataVal > 10) {
-            //     alpha = 0;
-            // } else {
-            //     alpha = 100;
-            // }
-            // imageData.data[i * 4] = 10;
-            // imageData.data[i*4+1] = 20;
-            // imageData.data[i*4+2] = 200;
-            // imageData.data[i*4+3] = alpha;
+//             // if (tDataVal > 10) {
+//             //     alpha = 0;
+//             // } else {
+//             //     alpha = 100;
+//             // }
+//             // imageData.data[i * 4] = 10;
+//             // imageData.data[i*4+1] = 20;
+//             // imageData.data[i*4+2] = 200;
+//             // imageData.data[i*4+3] = alpha;
 
-            dataArray[i] = tDataVal;
-        }
+//             dataArray[i] = tDataVal;
+//         }
 
-       delete imageData.data;
-        return {key, dataArray}
-        })
-        // imageObj = new Image();
-        // imageObj.crossOrigin = 'Anonymous';
-        // imageObj.src = 'https://a.tiles.mapbox.com/v4/mapbox.terrain-rgb/'+x+'.pngraw?access_token=' + L.mapbox.accessToken;
-        // return imageObj;
-        // })
-        console.log('imageDataArray', imageDataArray);    
-};
+//        delete imageData.data;
+//         return {key, dataArray}
+//         })
+//         // imageObj = new Image();
+//         // imageObj.crossOrigin = 'Anonymous';
+//         // imageObj.src = 'https://a.tiles.mapbox.com/v4/mapbox.terrain-rgb/'+x+'.pngraw?access_token=' + L.mapbox.accessToken;
+//         // return imageObj;
+//         // })
+//         console.log('imageDataArray', imageDataArray);    
+// };
 
 
 // var elevWorker = new Worker('js/imagedata.js');
