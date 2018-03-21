@@ -9,7 +9,7 @@ var map = L.map('map_canvas', {
     worldCopyJump: true,
     doubleClickZoom: false,
     center: [37.7576793, -122.5076407],
-    zoom: 13,
+    zoom: 9,
     scrollWheelZoom: false
     });
 
