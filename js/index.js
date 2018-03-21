@@ -139,7 +139,7 @@ elevTiles.drawTile = function (canvas, tile, zoom) {
 elevTiles.addTo(map);
 
 
-map.touchZoom.disable();
+// map.touchZoom.disable();
 // map.doubleClickZoom.disable();
 
 
