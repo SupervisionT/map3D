@@ -126,7 +126,7 @@ elevTiles.drawTile = function (canvas, tile, zoom) {
     imageObj.crossOrigin = 'Anonymous';
     imageObj.src = 'https://a.tiles.mapbox.com/v4/mapbox.terrain-rgb/'+zoom+'/'+tile.x+'/'+tile.y+'.pngraw?access_token=' + L.mapbox.accessToken;
 
-};
+}
 
 // elevWorker.addEventListener('message', function(response) {
 //     if (response.data.type === 'tiledata') {
@@ -148,4 +148,4 @@ elevTiles.addTo(map);
 // }
 // function formatTemp(temp) {
 //     return Math.round(temp)+'° f';
-// }
+}
