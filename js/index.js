@@ -9,13 +9,13 @@ var map = L.map('map_canvas', {
     worldCopyJump: true,
     doubleClickZoom: false,
     center: [37.7576793, -122.5076407],
-    zoom: 9,
+    zoom: 13,
     scrollWheelZoom: false
     });
 
 var hash = L.hash(map);
 
-L.mapbox.tileLayer('mapbox.outdoors').addTo(map);
+L.mapbox.tileLayer('mapbox.outdoors')
 
 var elevTiles = new L.TileLayer.Canvas({
     unloadInvisibleTiles:true,
