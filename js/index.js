@@ -15,7 +15,7 @@ var map = L.map('map_canvas', {
 
 var hash = L.hash(map);
 
-L.mapbox.tileLayer('mapbox.terrain-rgb').addTo(map);
+L.mapbox.tileLayer('mapbox.outdoors').addTo(map);
 
 var elevTiles = new L.TileLayer.Canvas({
     unloadInvisibleTiles:true,
