@@ -24,7 +24,7 @@ var elevTiles = new L.TileLayer.Canvas({
 console.log('elevTiles', elevTiles)
 
 elevTiles.on('tileunload', function(e){
-    // tilesData = [...tilesData, e.tile._tilePoint.id];  
+    tilesData = [...tilesData, e.tile._tilePoint.id];  
     elevWorker.postMessage({'data':e.tile._tilePoint.id,'type':'tileunload'});
 });
 
