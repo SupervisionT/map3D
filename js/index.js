@@ -67,28 +67,28 @@ elevTiles.on('tileunload', function(e){
 // };
 
 
-// var elevWorker = new Worker('js/imagedata.js');
+var elevWorker = new Worker('js/imagedata.js');
 
-// var tileContextsElev = {};
+var tileContextsElev = {};
 
-// var locs = location.search.split('?');
+var locs = location.search.split('?');
 
-// if (locs.length > 1) {
-//     locs = locs[1].split('=');
-// } else {
-//     locs = ['no']
-// }
+if (locs.length > 1) {
+    locs = locs[1].split('=');
+} else {
+    locs = ['no']
+}
 
-// if (locs[0] == 'elev') {
-//     elev_filter = parseInt(locs[1]);
-// } else {
-//     elev_filter = 10;
-// }
+if (locs[0] == 'elev') {
+    elev_filter = parseInt(locs[1]);
+} else {
+    elev_filter = 10;
+}
 
-// elevWorker.postMessage({
-//     data: elev_filter,
-//     type:'setfilter'}
-// );
+elevWorker.postMessage({
+    data: elev_filter,
+    type:'setfilter'}
+);
 
 elevTiles.drawTile = function (canvas, tile, zoom) {
     tileSize = this.options.tileSize;
@@ -111,16 +111,16 @@ elevTiles.drawTile = function (canvas, tile, zoom) {
         // Get Image Data
         var imageData = context.getImageData(0, 0, tileSize, tileSize);
         console.log(tileUID, imageData)
-    //     elevWorker.postMessage({
-    //         data:{
-    //             tileUID:tileUID,
-    //             tileSize:tileSize,
-    //             array:imageData.data,
-    //             drawElev: drawElev
-    //         },
-    //             type:'tiledata'},
-    //         [imageData.data.buffer]);
-    // };
+        elevWorker.postMessage({
+            data:{
+                tileUID:tileUID,
+                tileSize:tileSize,
+                array:imageData.data,
+                drawElev: drawElev
+            },
+                type:'tiledata'},
+            [imageData.data.buffer]);
+    };
 
     // Source of image tile
     imageObj.crossOrigin = 'Anonymous';
