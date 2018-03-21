@@ -140,7 +140,7 @@ elevTiles.addTo(map);
 
 
 map.touchZoom.disable();
-map.doubleClickZoom.disable();
+// map.doubleClickZoom.disable();
 
 
 // function formatElev(elev) {
