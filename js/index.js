@@ -128,13 +128,13 @@ elevTiles.drawTile = function (canvas, tile, zoom) {
 
 }
 
-// elevWorker.addEventListener('message', function(response) {
-//     if (response.data.type === 'tiledata') {
-//         var dispData = tileContextsElev[response.data.data.tileUID].createImageData(tileSize,tileSize);
-//         dispData.data.set(response.data.data.array);
-//         tileContextsElev[response.data.data.tileUID].putImageData(dispData,0,0);
-//     }
-// }, false);
+elevWorker.addEventListener('message', function(response) {
+    if (response.data.type === 'tiledata') {
+        var dispData = tileContextsElev[response.data.data.tileUID].createImageData(tileSize,tileSize);
+        dispData.data.set(response.data.data.array);
+        tileContextsElev[response.data.data.tileUID].putImageData(dispData,0,0);
+    }
+}, false);
 
 elevTiles.addTo(map);
 
@@ -148,4 +148,4 @@ elevTiles.addTo(map);
 // }
 // function formatTemp(temp) {
 //     return Math.round(temp)+'° f';
-}
+// }
