@@ -96,7 +96,7 @@ elevTiles.drawTile = function (canvas, tile, zoom) {
     var context = canvas.getContext('2d'),
         imageObj = new Image(),
         tileUID = ''+zoom+'/'+tile.x+'/'+tile.y;
-
+        console.log('tileUID vs tile.id', tileUID, tile.id)
     var drawContext = canvas.getContext('2d');
     // console.log('context',context)
     // To access / delete elevTiles later
