@@ -15,7 +15,7 @@ var map = L.map('map_canvas', {
 
 var hash = L.hash(map);
 
-L.mapbox.tileLayer('https://api.mapbox.com/v4/mapbox.terrain-rgb/'+map.getZoom()+'/'+map._size.x+'/'+map._size.y+'.pngraw?access_token='+ L.mapbox.accessToken).addTo(map);
+L.mapbox.tileLayer('mapbox.terrain-rgb').addTo(map);
 
 var elevTiles = new L.TileLayer.Canvas({
     unloadInvisibleTiles:true,
