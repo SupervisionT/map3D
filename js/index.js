@@ -33,7 +33,7 @@ var canvas = document.createElement('canvas'),
     var urls = srcs.map(src => (assembleUrl(null, src)));
     var imgsData = urls.map(src => (defaultImage(src, function cb(res){
         console.log('res', res);
-        tilesData = [...tilesData, res]
+        tilesData = [...tilesData, res.elev]
     })));
     
 function defaultImage(url, cb) {
@@ -52,12 +52,12 @@ function defaultImage(url, cb) {
           dataArray[i] = tDataVal;
         }
         // console.log('dataArray', dataArray);
-        cb(dataArray);
+        cb({ID: url.ID, elev: dataArray});
     }
   img.onerror = function(err) {
     cb(err)
   }
-  img.src = url
+  img.src = url.URL
 }
 
 
@@ -72,6 +72,6 @@ function assembleUrl(img, coords){
             var server = ['a','b','c','d'][serverIndex]
             //return 'sample.png'
             // return 'https://'+server+'.tiles.mapbox.com/v4/'+tileset+'/'+slashify(coords)+res+'?access_token=pk.eyJ1IjoicGV0ZXJxbGl1IiwiYSI6ImpvZmV0UEEifQ._D4bRmVcGfJvo1wjuOpA1g'           
-            return 'https://b.tiles.mapbox.com/v4/'+tileset+'/'+coords+res+'?access_token='+L.mapbox.accessToken
+            return {ID: coords, URL: 'https://b.tiles.mapbox.com/v4/'+tileset+'/'+coords+res+'?access_token='+L.mapbox.accessToken}
         }
         // "http://b.tiles.mapbox.com/v4/mapbox.outdoors/9/84/199@2x.pngraw?access_token=pk.eyJ1IjoicGFuZ2VhbWFwcyIsImEiOiJjaWdra3A1bjgwMHRwdW5senp6ajZzN2Z5In0.pZv62GV1KFSFmcnJqMCnFQ"
