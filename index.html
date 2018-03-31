@@ -8,8 +8,72 @@
     </head>
   <body>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-    <script src='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.js'></script>
-    <link href='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.css' rel='stylesheet' />
+    <div id="container"><br /><br /><br /><br /><br />Generating world...</div>
+    <!-- <script src='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.js'></script>
+    <link href='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.css' rel='stylesheet' /> -->
     <script type="text/javascript" src="js/index.js"></script>
+    <script src= 'js/sm.js'></script>
+    <script src= 'js/utilities.js'></script>
+    <script src="js/three.min.js"></script>
+    <script src="js/OrbitControls.js"></script>
+    <!-- <div id="info"><a href="http://threejs.org" target="_blank" rel="noopener">three.js</a> - webgl terrain raycasting demo</div> -->
+    <script src="js/threejs/three.js"></script>
+    <script src="js/threejs/controls/OrbitControls.js"></script>
+    <script src="js/threejs/ImprovedNoise.js"></script>
+    <script src="js/threejs/Detector.js"></script>
+    <script src="js/threejs/libs/stats.min.js"></script>
+    <script src="js/Float32Array.concat.js"></script>
+    <script src="js/main.js"></script>
+    <!-- <script>
+        debugMode = false
+        var firstTime = true;
+        var meshes = 0;
+        var parserRequests = 0;
+        var updaterRequests = 0;
+        var finished = 0;
+        //compass functionality
+        var pivot = document.querySelector('#grid')
+        var compass = document.querySelector('#compass img')
+        var screenPosition;
+        function updateCompass(reset){
+            var styling;
+    
+            if (reset) {
+                controls.straighten();
+                controls.autoRotate=false;
+                styling = '';
+            }
+            else {
+                var angle = controls.getAzimuthalAngle()*180/Math.PI;
+                var pitch = controls.getPolarAngle()*180/Math.PI;
+                styling = 'rotateX('+pitch+'deg) rotateZ('+angle+'deg)'
+            }
+            compass.style['-webkit-transform'] = styling
+            pivot.style['-webkit-transform'] = styling
+            pivot.style['display'] = 'block'
+        }
+    
+        //set up scene
+        var width  = window.innerWidth,
+            height = window.innerHeight;
+        var scene = new THREE.Scene();
+    
+        //set up renderer
+        var renderer = new THREE.WebGLRenderer({alpha:true});
+        renderer.setSize(width, height)
+        document.getElementById('webgl').appendChild(renderer.domElement);
+    
+        //set up camera
+        var camera = new THREE.PerspectiveCamera(70, width / height, 1/99, 100000000000000);
+        camera.position.y = 12000;
+        var controls = new THREE.OrbitControls( camera, renderer.domElement );
+        render();
+    
+        function render() {
+            controls.update();
+            requestAnimationFrame(render);
+            renderer.render(scene, camera);
+        }
+    </script> -->
   </body>
 </html>
